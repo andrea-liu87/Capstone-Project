@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Petto</string>
+
+    <!--Content description related string-->
+    <string name="hunger_button">Feed button</string>
+    <string name="clean_button">Shower button</string>
+    <string name="play_button">Play button</string>
+
+    <string name="appwidget_text">Choco</string>
+</resources>

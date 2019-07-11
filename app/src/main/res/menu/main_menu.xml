@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/create_pet"
+        android:title="Create Pet"
+        android:orderInCategory="1"/>
+
+    <item
+        android:id="@+id/screenshoot"
+        android:icon="@android:drawable/ic_menu_camera"
+        android:title="Screenshoot"
+        android:orderInCategory="2"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/delete_pet"
+        android:title="Delete Pet"
+        android:orderInCategory="99"/>
+</menu>
