@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:maxWidth="350dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools">
 
     <ImageButton
         android:id="@+id/hunger_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         style="@style/button_add_style"
         android:src="@drawable/icon_hunger"
         android:contentDescription="@string/hunger_button"
@@ -21,17 +18,16 @@
     <ProgressBar
         android:id="@+id/hunger_bar"
         style="@style/progress_bar"
-        android:progress="5"
+        android:layout_marginEnd="8dp"
         app:layout_constraintBottom_toBottomOf="@+id/hunger_button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.9"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/hunger_button" />
+        app:layout_constraintHorizontal_bias="0.2"
+        app:layout_constraintStart_toEndOf="@id/hunger_button"
+        app:layout_constraintTop_toTopOf="@+id/hunger_button"
+        tool:progress="5" />
 
     <ImageButton
         android:id="@+id/clean_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         style="@style/button_add_style"
         android:src="@drawable/icon_shower"
         android:contentDescription="@string/clean_button"
@@ -43,17 +39,15 @@
     <ProgressBar
         android:id="@+id/cleanliness_bar"
         style="@style/progress_bar"
-        android:progress="5"
+        tool:progress="5"
         app:layout_constraintBottom_toBottomOf="@+id/clean_button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.9"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.2"
+        app:layout_constraintStart_toEndOf="@id/clean_button"
         app:layout_constraintTop_toTopOf="@+id/clean_button" />
 
     <ImageButton
         android:id="@+id/play_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         style="@style/button_add_style"
         android:src="@drawable/icon_play"
         android:contentDescription="@string/play_button"
@@ -65,11 +59,11 @@
     <ProgressBar
         android:id="@+id/happiness_bar"
         style="@style/progress_bar"
-        android:progress="5"
+        tool:progress="5"
         app:layout_constraintBottom_toBottomOf="@+id/play_button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.9"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.2"
+        app:layout_constraintStart_toEndOf="@id/play_button"
         app:layout_constraintTop_toTopOf="@+id/play_button" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

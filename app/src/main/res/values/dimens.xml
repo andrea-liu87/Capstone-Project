@@ -6,4 +6,6 @@ Refer to App Widget Documentation for margin information
 http://developer.android.com/guide/topics/appwidgets/index.html#CreatingLayout
     -->
 
+    <dimen name="icon_size">36dp</dimen>
+    <dimen name="pb_width">144dp</dimen>
 </resources>

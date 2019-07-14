@@ -13,7 +13,10 @@
 
     <!-- style for feed, shower and play button-->
     <style name="button_add_style">
+        <item name="android:layout_width">@dimen/icon_size</item>
+        <item name="android:layout_height">@dimen/icon_size</item>
         <item name="android:layout_marginTop">16dp</item>
+        <item name="android:scaleType">fitXY</item>
         <item name="android:padding">8dp</item>
         <item name="android:background">@drawable/button</item>
         <item name="android:elevation">8dp</item>
@@ -23,8 +26,8 @@
 
     <!-- style for progress bar-->
     <style name="progress_bar" parent="Widget.AppCompat.ProgressBar.Horizontal">
-        <item name="android:layout_width">188dp</item>
-        <item name="android:layout_height">36dp</item>
+        <item name="android:layout_width">@dimen/pb_width</item>
+        <item name="android:layout_height">@dimen/icon_size</item>
         <item name="android:paddingStart">8dp</item>
         <item name="android:paddingEnd">8dp</item>
         <item name="android:max">10</item>

@@ -50,12 +50,17 @@ public class AnimateView extends SurfaceView implements Runnable {
         super(context);
         this.ourHolder = getHolder();
         this.paint = new Paint();
+
+        if (screenWidth >=600 && screenWidth < 800){ bitmapHeight = 450;}
+        else if (screenWidth >= 800 && screenWidth < 1200){bitmapHeight = 600;}
+        else if (screenWidth >= 1200){bitmapHeight = 750;}
+        else {bitmapHeight = 300;}
+
+        bitmapWidth = (int) (bitmapHeight*0.67);
+
         bitmapCats[0] = BitmapFactory.decodeResource(this.getResources(), R.drawable.cat_walk1);
         bitmapCats[1] = BitmapFactory.decodeResource(this.getResources(), R.drawable.cat_walk2);
         bitmapHappyCat = BitmapFactory.decodeResource(this.getResources(), R.drawable.cat_happy1);
-
-        bitmapWidth = bitmapCats[0].getWidth();
-        bitmapHeight = bitmapCats[0].getHeight();
     }
 
     @Override
@@ -109,7 +114,7 @@ public class AnimateView extends SurfaceView implements Runnable {
             canvas = ourHolder.lockCanvas();
             canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
 
-            Bitmap bitmap = getNextBitmap();
+            Bitmap bitmap = Bitmap.createScaledBitmap(getNextBitmap(),bitmapWidth,bitmapHeight,false);
 
             canvas.drawBitmap(bitmap,
                     catXPosition, 0, paint);
@@ -126,7 +131,7 @@ public class AnimateView extends SurfaceView implements Runnable {
             canvas = ourHolder.lockCanvas();
             canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
 
-            Bitmap bitmap = bitmapHappyCat;
+            Bitmap bitmap = Bitmap.createScaledBitmap(bitmapHappyCat, bitmapWidth, bitmapHeight, false);
 
             canvas.drawBitmap(bitmap,
                     catXPosition, 0, paint);
