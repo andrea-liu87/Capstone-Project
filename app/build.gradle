@@ -1,16 +1,25 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 28
+    signingConfigs {
+        release {
+            storePassword 'Keystore'
+            keyAlias = 'Keystore'
+            keyPassword 'Keystore'
+            storeFile file('/media/andrea/Folders/Android-Project/Keystores/petto.jks')
+        }
+    }
+    compileSdkVersion 29
     defaultConfig {
         applicationId "com.andreasgift.petto"
         minSdkVersion 21
-        targetSdkVersion 28
+        targetSdkVersion 29
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         multiDexEnabled true
+        signingConfig signingConfigs.release
 
         compileOptions {
             sourceCompatibility 1.8
@@ -36,6 +45,8 @@ dependencies {
     implementation 'com.google.android.gms:play-services-ads:18.0.0'
     implementation 'com.google.android.gms:play-services-measurement:17.0.0'
     implementation 'com.google.android.gms:play-services-measurement-sdk:17.0.0'
+
+    implementation 'com.firebase:firebase-jobdispatcher:0.6.0'
 
     implementation 'com.github.karanvs:hiddenshot:v1.2'
 

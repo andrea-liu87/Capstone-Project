@@ -7,4 +7,11 @@
     <string name="play_button">Play button</string>
 
     <string name="appwidget_text">Choco</string>
+    <string name="menu_create_pet">Create Pet</string>
+    <string name="menu_screenshoot">Screenshoot</string>
+    <string name="menu_delete_pet">Delete Pet</string>
+    <string name="toast_pet_died">RIP Choco. Your pet has died</string>
+    <string name="toast_hunger_critical">Hunger status is critical</string>
+    <string name="toast_cleanliness_critical">Cleanliness status is critical</string>
+    <string name="toast_happiness_critical">Happiness status is critical</string>
 </resources>

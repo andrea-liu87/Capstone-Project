@@ -56,31 +56,44 @@ public class FragmentAttributes extends Fragment implements View.OnClickListener
         return view;
     }
 
+    /**
+     * To set pet attributes value. Value will be retrieve from content provider
+     * @param hunger
+     * @param cleanliness
+     * @param happiness
+     */
     public void setAttributes(int hunger, int cleanliness, int happiness){
         progressHungerBar = hunger;
         progressCleanlinessBar = cleanliness;
         progresssHappinessBar = happiness;
     }
 
+    /**
+     * This method will give indication if pet attributes in critical value
+     */
     private void checkStatusProgressBar (){
         String statusBar = "";
         if (progressHungerBar == 0 || progressCleanlinessBar == 0 || progresssHappinessBar == 0){
-            Toast.makeText(getContext(), "RIP Choco. Your pet has died", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), getString(R.string.toast_pet_died), Toast.LENGTH_LONG).show();
             PetProviderHelper.deleteAllPet(getContext().getContentResolver());
             return;
         }
         if (progressHungerBar < 3){
-            statusBar = "Hunger status is critical";
+            statusBar = getString(R.string.toast_hunger_critical);
         }
         if (progressCleanlinessBar < 3){
-            statusBar = "Cleanliness status is critical";
+            statusBar = getString(R.string.toast_cleanliness_critical);
         }
         if (progresssHappinessBar < 3){
-            statusBar = "Happiness status is critical";
+            statusBar = getString(R.string.toast_happiness_critical);
         }
         Toast.makeText(getContext(),statusBar, Toast.LENGTH_LONG).show();
     }
 
+    /**
+     * Calling all necessary method when pet attributes button is clicked
+     * @param v pet attribute button
+     */
     @Override
     public void onClick(View v) {
         switch (v.getId()){

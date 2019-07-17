@@ -1,16 +1,12 @@
 package com.andreasgift.petto;
 
 import android.Manifest;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.PixelFormat;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -26,7 +22,13 @@ import com.andreasgift.petto.data.PetProviderHelper;
 import com.andreasgift.petto.model.Pet;
 import com.andreasgift.petto.ui.AnimateView;
 import com.andreasgift.petto.ui.FragmentAttributes;
-import com.andreasgift.petto.ui.ProgressBarService;
+import com.andreasgift.petto.data.ScheduleJobService;
+import com.firebase.jobdispatcher.FirebaseJobDispatcher;
+import com.firebase.jobdispatcher.GooglePlayDriver;
+import com.firebase.jobdispatcher.Job;
+import com.firebase.jobdispatcher.JobTrigger;
+import com.firebase.jobdispatcher.Lifetime;
+import com.firebase.jobdispatcher.Trigger;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
@@ -159,45 +161,67 @@ public class MainActivity extends AppCompatActivity {
      * @param mode      0 = pet created; 1 = pet deleted
      */
     private void setPetAttributesScheduler(Context context, int mode){
-        Intent hungerIntent = new Intent(context, ProgressBarService.class);
-        hungerIntent.putExtra(PetContract.ATTRIBUTES_KEY,PetContract.HUNGER_IND);
-        PendingIntent hungerPendingIntent = PendingIntent.getService(context, 0, hungerIntent, 0);
+        if (mode == 0) {
+            scheduleJob(context, PetContract.HUNGER_IND);
+            scheduleJob(context, PetContract.CLEANLINESS_IND);
+            scheduleJob(context, PetContract.HAPPINESS_IND);
+            } else {
+            cancelJob(context);}
+        }
 
-        Intent cleanlinessIntent = new Intent(context, ProgressBarService.class);
-        cleanlinessIntent.putExtra(PetContract.ATTRIBUTES_KEY, PetContract.CLEANLINESS_IND);
-        PendingIntent clealinessPendgInt = PendingIntent.getService(context,0, cleanlinessIntent,0);
+    /**
+     * The method to schedule job for reducing pet attributes periodically
+     * @param context
+     * @param mode      0 = reduce hunger attribute every 5 hour;
+     *                  1 = reduce cleanliness attribute every 8 hour;
+     *                  2 = reduce happiness atribute every 6 hour;
+     */
+    public static void scheduleJob (Context context, int mode){
+        FirebaseJobDispatcher dispatcher = new FirebaseJobDispatcher(new GooglePlayDriver(context));
 
-        Intent happinsIntent = new Intent(context, ProgressBarService.class);
-        happinsIntent.putExtra(PetContract.ATTRIBUTES_KEY, PetContract.HAPPINESS_IND);
-        PendingIntent happnssPndgIntt = PendingIntent.getService(context, 0, happinsIntent, 0);
+        Bundle extras = new Bundle();
+        JobTrigger time ;
 
-        //For now testing hunger bar every 1 minute drop -1 but other atributes has been set per designated hour
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        switch (mode) {
+            case 0 :
+                time = Trigger.executionWindow(5*60*60, (int)5.2*60*60);
+                extras.putInt(PetContract.ATTRIBUTES_KEY, PetContract.HUNGER_IND);
+                break;
+            case 1 :
+                time = Trigger.executionWindow(8*60*60, (int)8.2*60*60);
+                extras.putInt(PetContract.ATTRIBUTES_KEY, PetContract.CLEANLINESS_IND);
+                break;
+            case 2:
+                time = Trigger.executionWindow(6*60*60, (int)6.2*60*60);
+                extras.putInt(PetContract.ATTRIBUTES_KEY, PetContract.HAPPINESS_IND);
+                break;
+                default:
+                    time = null;
+                    extras.putInt(PetContract.ATTRIBUTES_KEY, -1);
+        }
 
-        if (mode == 0){
-        alarmManager.setInexactRepeating(
-                AlarmManager.ELAPSED_REALTIME,
-                SystemClock.elapsedRealtime(),
-                1*60*1000,
-                hungerPendingIntent
-        );
-        alarmManager.setInexactRepeating(
-                AlarmManager.ELAPSED_REALTIME,
-                SystemClock.elapsedRealtime(),
-                6*60*60*1000,
-                clealinessPendgInt
-        );
-        alarmManager.setInexactRepeating(
-                AlarmManager.ELAPSED_REALTIME,
-                SystemClock.elapsedRealtime(),
-                6*60*60*1000,
-                happnssPndgIntt
-        );}
-        else {
-            alarmManager.cancel(hungerPendingIntent);
-            alarmManager.cancel(clealinessPendgInt);
-            alarmManager.cancel(happnssPndgIntt);}
+        Job job = dispatcher.newJobBuilder()
+                .setLifetime(Lifetime.FOREVER)
+                .setService(ScheduleJobService.class)
+                .setRecurring(true)
+                .setTrigger(time)
+                .setTag(PetContract.PROVIDER_NAME)
+                .setExtras(extras)
+                .build();
+        dispatcher.mustSchedule(job);
     }
+
+
+    /**
+     * Cancel all JobScheduler
+     * @param context
+     */
+    public static void cancelJob (Context context){
+        FirebaseJobDispatcher dispatcher = new FirebaseJobDispatcher(new GooglePlayDriver(context));
+        dispatcher.cancelAll();
+    }
+
+
 
     /**
      * Show happy cat jumping on the screen when the pet attributes is added

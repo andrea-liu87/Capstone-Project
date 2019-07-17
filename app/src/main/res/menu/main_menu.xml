@@ -4,18 +4,18 @@
 
     <item
         android:id="@+id/create_pet"
-        android:title="Create Pet"
+        android:title="@string/menu_create_pet"
         android:orderInCategory="1"/>
 
     <item
         android:id="@+id/screenshoot"
         android:icon="@android:drawable/ic_menu_camera"
-        android:title="Screenshoot"
+        android:title="@string/menu_screenshoot"
         android:orderInCategory="2"
         app:showAsAction="always"/>
 
     <item
         android:id="@+id/delete_pet"
-        android:title="Delete Pet"
+        android:title="@string/menu_delete_pet"
         android:orderInCategory="99"/>
 </menu>

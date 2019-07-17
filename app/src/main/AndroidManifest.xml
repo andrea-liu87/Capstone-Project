@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.andreasgift.petto">
 
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
@@ -40,11 +39,7 @@
             android:name=".data.PetProvider"
             android:authorities="pet_provider.authority" />
 
-        <service android:name=".ui.ProgressBarService">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-        </service>
+        <service android:name=".data.ScheduleJobService"/>
     </application>
 
 </manifest>
