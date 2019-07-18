@@ -34,32 +34,33 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.veer.hiddenshot.HiddenShot;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class MainActivity extends AppCompatActivity {
     private static AnimateView spriteView;
-    private FrameLayout sprite_container;
+
+    @BindView(R.id.toolbar) Toolbar mToolbar;
+    @BindView(R.id.sprite_container) FrameLayout sprite_container;
+    @BindView(R.id.adView) AdView mAdView;
 
     private Pet pet;
 
     private MediaPlayer mediaPlayer;
 
-    final String TAG = "MainActivity";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
 
         if (Build.VERSION.SDK_INT >= 23){
-        requestPermission(Manifest.permission.RECEIVE_BOOT_COMPLETED);
         requestPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
         requestPermission(Manifest.permission.READ_EXTERNAL_STORAGE);}
 
-        MobileAds.initialize(this, "ca-app-pub-9870070910946608~7026798035");
-        Toolbar mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
-        sprite_container = findViewById(R.id.sprite_container);
 
-        AdView mAdView = findViewById(R.id.adView);
+        MobileAds.initialize(this, "ca-app-pub-9870070910946608~7026798035");
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 

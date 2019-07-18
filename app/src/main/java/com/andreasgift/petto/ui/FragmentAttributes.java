@@ -15,19 +15,22 @@ import com.andreasgift.petto.R;
 import com.andreasgift.petto.data.PetContract;
 import com.andreasgift.petto.data.PetProviderHelper;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class FragmentAttributes extends Fragment implements View.OnClickListener {
     private int progressHungerBar = -1;
     private int progressCleanlinessBar= -1;
     private int progresssHappinessBar = -1;
     private final int maxValue = 10;
 
-    private ImageButton hungerButton;
-    private ImageButton cleanButton;
-    private ImageButton playButton;
+    @BindView(R.id.hunger_button) ImageButton hungerButton;
+    @BindView(R.id.clean_button) ImageButton cleanButton;
+    @BindView(R.id.play_button) ImageButton playButton;
 
-    private ProgressBar hunger;
-    private ProgressBar clean;
-    private ProgressBar happiness;
+    @BindView(R.id.hunger_bar) ProgressBar hunger;
+    @BindView(R.id.cleanliness_bar) ProgressBar clean;
+    @BindView(R.id.happiness_bar) ProgressBar happiness;
 
     //Mandatory empty constructor
     public FragmentAttributes(){}
@@ -35,13 +38,7 @@ public class FragmentAttributes extends Fragment implements View.OnClickListener
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_attributes, container, false);
-        hunger = view.findViewById(R.id.hunger_bar);
-        clean = view.findViewById(R.id.cleanliness_bar);
-        happiness = view.findViewById(R.id.happiness_bar);
-
-        hungerButton = view.findViewById(R.id.hunger_button);
-        cleanButton = view.findViewById(R.id.clean_button);
-        playButton = view.findViewById(R.id.play_button);
+        ButterKnife.bind(this, view);
 
         hungerButton.setOnClickListener(this);
         cleanButton.setOnClickListener(this);
